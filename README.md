@@ -10,3 +10,12 @@ Very basic in functionality, it assumes you have git configured for push and pul
 `Git: Snapshot`:
 * Asks you for a commit message
 * Commits
+
+## Installation
+Open your `PLUGS` note in SilverBullet and add this plug to the list:
+
+```
+- github:silverbulletmd/silverbullet-git/git.plug.json
+```
+
+Then run the `Plugs: Update` command and off you go!

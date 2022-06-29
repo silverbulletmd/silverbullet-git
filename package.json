@@ -3,14 +3,14 @@
     "version": "0.0.1",
     "author": "Zef Hemel",
     "scripts": {
-        "build": "plugos-bundle --exclude yaml handlebars -- git.plug.yaml",
-        "start": "plugos-bundle -w --exclude yaml handlebars -- git.plug.yaml"
+        "build": "plugos-bundle --exclude yaml handlebars @lezer/lr -- git.plug.yaml",
+        "start": "plugos-bundle -w --exclude yaml handlebars @lezer/lr -- git.plug.yaml"
     },
     "dependencies": {
-        "@plugos/plugos-syscall": "^0.0.14",
-        "@silverbulletmd/plugos-silverbullet-syscall": "^0.0.14"
+        "@plugos/plugos-syscall": "^0.0.16",
+        "@silverbulletmd/plugos-silverbullet-syscall": "^0.0.16"
     },
     "devDependencies": {
-        "@plugos/plugos": "^0.0.14"
+        "@plugos/plugos": "^0.0.16"
     }
 }
