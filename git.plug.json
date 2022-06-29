@@ -1,0 +1,30 @@
+{
+  "name": "git",
+  "requiredPermissions": [
+    "shell"
+  ],
+  "functions": {
+    "snapshotCommand": {
+      "env": "client",
+      "command": {
+        "name": "Git: Snapshot"
+      },
+      "code": "(() => { var mod=(()=>{var i=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var d=(t,r)=>{for(var o in r)i(t,o,{get:r[o],enumerable:!0})},p=(t,r,o,s)=>{if(r&&typeof r==\"object\"||typeof r==\"function\")for(let e of l(r))!g.call(t,e)&&e!==o&&i(t,e,{get:()=>r[e],enumerable:!(s=m(r,e))||s.enumerable});return t};var f=t=>p(i({},\"__esModule\",{value:!0}),t);var P={};d(P,{default:()=>x});var h=self.syscall;var n=self.syscall;function u(t,r=\"\"){return n(\"editor.prompt\",t,r)}async function a(t,r,...o){return n(\"system.invokeFunction\",t,r,...o)}async function c(){let t=await u(\"Revision name:\");t||(t=\"Snapshot\"),console.log(\"Revision name\",t),await a(\"server\",\"commit\",t)}var x=c;return f(P);})();\n return mod;})()"
+    },
+    "syncCommand": {
+      "env": "client",
+      "command": {
+        "name": "Git: Sync"
+      },
+      "code": "(() => { var mod=(()=>{var i=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var d=(t,r)=>{for(var o in r)i(t,o,{get:r[o],enumerable:!0})},p=(t,r,o,u)=>{if(r&&typeof r==\"object\"||typeof r==\"function\")for(let e of l(r))!g.call(t,e)&&e!==o&&i(t,e,{get:()=>r[e],enumerable:!(u=m(r,e))||u.enumerable});return t};var f=t=>p(i({},\"__esModule\",{value:!0}),t);var P={};d(P,{default:()=>x});var h=self.syscall;var n=self.syscall;function s(t){return n(\"editor.flashNotification\",t)}async function a(t,r,...o){return n(\"system.invokeFunction\",t,r,...o)}async function c(){await s(\"Syncing with git\"),await a(\"server\",\"sync\"),await s(\"Git sync complete!\")}var x=c;return f(P);})();\n return mod;})()"
+    },
+    "commit": {
+      "env": "server",
+      "code": "(() => { var mod=(()=>{var n=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var d=(t,r)=>{for(var e in r)n(t,e,{get:r[e],enumerable:!0})},p=(t,r,e,s)=>{if(r&&typeof r==\"object\"||typeof r==\"function\")for(let o of l(r))!g.call(t,o)&&o!==e&&n(t,o,{get:()=>r[o],enumerable:!(s=m(r,o))||s.enumerable});return t};var f=t=>p(n({},\"__esModule\",{value:!0}),t);var x={};d(x,{default:()=>h});var u=self.syscall;async function i(t,r){return u(\"shell.run\",t,r)}var a=self.syscall;async function c(t){t||(t=\"Snapshot\"),console.log(\"Snapshotting the current space to git with commit message\",t),await i(\"git\",[\"add\",\"./*.md\"]);try{await i(\"git\",[\"commit\",\"-a\",\"-m\",t])}catch{}console.log(\"Done!\")}var h=c;return f(x);})();\n return mod;})()"
+    },
+    "sync": {
+      "env": "server",
+      "code": "(() => { var mod=(()=>{var i=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var d=(t,r)=>{for(var n in r)i(t,n,{get:r[n],enumerable:!0})},p=(t,r,n,s)=>{if(r&&typeof r==\"object\"||typeof r==\"function\")for(let o of l(r))!g.call(t,o)&&o!==n&&i(t,o,{get:()=>r[o],enumerable:!(s=m(r,o))||s.enumerable});return t};var f=t=>p(i({},\"__esModule\",{value:!0}),t);var P={};d(P,{default:()=>x});var u=self.syscall;async function e(t,r){return u(\"shell.run\",t,r)}var a=self.syscall;async function h(t){t||(t=\"Snapshot\"),console.log(\"Snapshotting the current space to git with commit message\",t),await e(\"git\",[\"add\",\"./*.md\"]);try{await e(\"git\",[\"commit\",\"-a\",\"-m\",t])}catch{}console.log(\"Done!\")}async function c(){console.log(\"Going to sync with git\"),await h(),console.log(\"Then pulling from remote\"),await e(\"git\",[\"pull\"]),console.log(\"And then pushing to remote\"),await e(\"git\",[\"push\"]),console.log(\"Done!\")}var x=c;return f(P);})();\n return mod;})()"
+    }
+  }
+}
