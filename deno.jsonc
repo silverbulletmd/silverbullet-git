@@ -1,0 +1,7 @@
+{
+  "importMap": "import_map.json",
+  "tasks": {
+    "build": "plugos-bundle --importmap import_map.json git.plug.yaml",
+    "watch": "plugos-bundle -w --importmap import_map.json git.plug.yaml"
+  }
+}

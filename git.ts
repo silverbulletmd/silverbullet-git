@@ -1,9 +1,9 @@
-import { run } from "@plugos/plugos-syscall/shell";
+import { run } from "$sb-syscall/plugos-syscall/shell.ts";
 import {
   flashNotification,
   prompt,
-} from "@silverbulletmd/plugos-silverbullet-syscall/editor";
-import { invokeFunction } from "@silverbulletmd/plugos-silverbullet-syscall/system";
+} from "$sb-syscall/silverbullet-syscall/editor.ts";
+import { invokeFunction } from "$sb-syscall/silverbullet-syscall/system.ts";
 
 export async function commit(message?: string) {
   if (!message) {
@@ -11,12 +11,12 @@ export async function commit(message?: string) {
   }
   console.log(
     "Snapshotting the current space to git with commit message",
-    message
+    message,
   );
   await run("git", ["add", "./*.md"]);
   try {
     await run("git", ["commit", "-a", "-m", message]);
-  } catch (e) {
+  } catch {
     // We can ignore, this happens when there's no changes to commit
   }
   console.log("Done!");

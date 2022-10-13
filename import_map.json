@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "$sb-syscall/": "https://deno.land/x/silverbullet/syscall/"
+  }
+}

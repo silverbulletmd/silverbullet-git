@@ -19,3 +19,8 @@ Open your `PLUGS` note in SilverBullet and add this plug to the list:
 ```
 
 Then run the `Plugs: Update` command and off you go!
+
+## To Build
+```shell
+deno task build
+```

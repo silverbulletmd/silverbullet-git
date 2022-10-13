@@ -1,4 +1,6 @@
 name: git
+imports:
+  - https://get.silverbullet.md/global.plug.json
 requiredPermissions:
   - shell
 functions:
@@ -18,4 +20,3 @@ functions:
   sync:
     path: "./git.ts:sync"
     env: server
-
