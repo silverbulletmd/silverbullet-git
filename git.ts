@@ -1,4 +1,4 @@
-import { run } from "$sb-syscall/plugos-syscall/shell.ts";
+import { shell } from "$sb-syscall/plugos-syscall/mod.ts";
 import {
   flashNotification,
   prompt,
@@ -13,9 +13,9 @@ export async function commit(message?: string) {
     "Snapshotting the current space to git with commit message",
     message,
   );
-  await run("git", ["add", "./*.md"]);
+  await shell.run("git", ["add", "./*.md"]);
   try {
-    await run("git", ["commit", "-a", "-m", message]);
+    await shell.run("git", ["commit", "-a", "-m", message]);
   } catch {
     // We can ignore, this happens when there's no changes to commit
   }
@@ -41,8 +41,8 @@ export async function sync() {
   console.log("Going to sync with git");
   await commit();
   console.log("Then pulling from remote");
-  await run("git", ["pull"]);
+  await shell.run("git", ["pull"]);
   console.log("And then pushing to remote");
-  await run("git", ["push"]);
+  await shell.run("git", ["push"]);
   console.log("Done!");
 }
