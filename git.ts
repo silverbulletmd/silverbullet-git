@@ -1,9 +1,5 @@
-import { shell } from "$sb-syscall/plugos-syscall/mod.ts";
-import {
-  flashNotification,
-  prompt,
-} from "$sb-syscall/silverbullet-syscall/editor.ts";
-import { invokeFunction } from "$sb-syscall/silverbullet-syscall/system.ts";
+import { shell } from "$sb/plugos-syscall/mod.ts";
+import { editor, system } from "$sb/silverbullet-syscall/mod.ts";
 
 export async function commit(message?: string) {
   if (!message) {
@@ -23,18 +19,18 @@ export async function commit(message?: string) {
 }
 
 export async function snapshotCommand() {
-  let revName = await prompt(`Revision name:`);
+  let revName = await editor.prompt(`Revision name:`);
   if (!revName) {
     revName = "Snapshot";
   }
   console.log("Revision name", revName);
-  await invokeFunction("server", "commit", revName);
+  await system.invokeFunction("server", "commit", revName);
 }
 
 export async function syncCommand() {
-  await flashNotification("Syncing with git");
-  await invokeFunction("server", "sync");
-  await flashNotification("Git sync complete!");
+  await editor.flashNotification("Syncing with git");
+  await system.invokeFunction("server", "sync");
+  await editor.flashNotification("Git sync complete!");
 }
 
 export async function sync() {
