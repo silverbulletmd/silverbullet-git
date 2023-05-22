@@ -9,7 +9,8 @@ export async function commit(message?: string) {
     "Snapshotting the current space to git with commit message",
     message,
   );
-  await shell.run("git", ["add", "./*.md"]);
+  const { code } = await shell.run("git", ["add", "./*.md"]);
+  console.log("Git add code", code);
   try {
     await shell.run("git", ["commit", "-a", "-m", message]);
   } catch {

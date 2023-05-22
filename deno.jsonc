@@ -1,7 +1,7 @@
 {
   "importMap": "import_map.json",
   "tasks": {
-    "build": "plugos-bundle --info --importmap import_map.json git.plug.yaml",
-    "watch": "plugos-bundle -w --importmap import_map.json git.plug.yaml"
+    "build": "silverbullet plug:compile --importmap import_map.json git.plug.yaml",
+    "watch": "silverbullet plug:compile -w --importmap import_map.json git.plug.yaml"
   }
 }
