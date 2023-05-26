@@ -1,6 +1,4 @@
 name: git
-imports:
-  - https://get.silverbullet.md/global.plug.json
 requiredPermissions:
   - shell
 functions:
