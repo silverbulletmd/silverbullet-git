@@ -67,7 +67,7 @@ export async function githubCloneCommand() {
   await shell.run("mkdir", ["-p", "_checkout"]);
   await shell.run("git", ["clone", url, "_checkout"]);
   // Moving all files from _checkout to the current directory, which will complain a bit about . and .., but we'll ignore that
-  await shell.run("sh", ["-c", "mv -f _checkout/{.,}* . 2> /dev/null; true"]);
+  await shell.run("bash", ["-c", "mv -f _checkout/{.,}* . 2> /dev/null; true"]);
   await shell.run("rm", ["-rf", "_checkout"]);
   await shell.run("git", ["config", "user.name", name]);
   await shell.run("git", ["config", "user.email", email]);
