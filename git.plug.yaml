@@ -2,6 +2,10 @@ name: git
 requiredPermissions:
   - shell
 functions:
+  autoCommit:
+    path: git.ts:autoCommit
+    env: server
+    cron: "* * * * *"
   githubCloneCommand:
     path: "./git.ts:githubCloneCommand"
     command:

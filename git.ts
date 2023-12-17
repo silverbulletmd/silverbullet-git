@@ -1,5 +1,5 @@
-import { shell } from "$sb/plugos-syscall/mod.ts";
-import { editor } from "$sb/silverbullet-syscall/mod.ts";
+import { editor, shell } from "$sb/syscalls.ts";
+import { readSetting } from "$sb/lib/settings_page.ts";
 
 export async function commit(message?: string) {
   if (!message) {
@@ -31,6 +31,11 @@ export async function snapshotCommand() {
 
 export async function syncCommand() {
   await editor.flashNotification("Syncing with git");
+  await sync();
+  await editor.flashNotification("Git sync complete!");
+}
+
+async function sync() {
   console.log("Going to sync with git");
   await commit();
   console.log("Then pulling from remote");
@@ -38,7 +43,6 @@ export async function syncCommand() {
   console.log("And then pushing to remote");
   await shell.run("git", ["push"]);
   console.log("Done!");
-  await editor.flashNotification("Git sync complete!");
 }
 
 export async function githubCloneCommand() {
@@ -74,4 +78,20 @@ export async function githubCloneCommand() {
   await editor.flashNotification(
     "Done. Now just wait for sync to kick in to get all the content.",
   );
+}
+
+export async function autoCommit() {
+  console.log("Triggered auto commit");
+  const git = await readSetting("git", {});
+  if (git.autoCommitMinutes) {
+    const currentMinutes = new Date().getMinutes();
+    if (currentMinutes % git.autoCommitMinutes === 0) {
+      console.log("Auto commit time!");
+      if (git.autoSync) {
+        await sync();
+      } else {
+        await commit("Auto commit");
+      }
+    }
+  }
 }

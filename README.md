@@ -1,6 +1,6 @@
 # SilverBullet plug for Git
 
-Very basic in functionality, it assumes you have git configured for push and pull in your space. What it does, roughly speaking:
+Simple git plugin for SilverBullet.
 
 {[Git: Sync]}:
 
@@ -17,6 +17,17 @@ Very basic in functionality, it assumes you have git configured for push and pul
 {[Github: Clone]}:
 
 Clones into your space from a Github repository. This will do authentication based on a [personal access token](https://github.com/settings/tokens).
+
+## Configuration
+This plug now supports auto commit and auto sync. You can configure this in your [[SETTINGS]] page as follows:
+
+```yaml
+git:
+  autoCommitMinutes: 5
+  autoSync: true # or false
+```
+
+This will automatically commit (and if `autoSync` is set to `true` perform a sync, meaning do the whole "push" and "pull" dance) every 5 minutes. If no changes were made, the git commands won't do anything.
 
 ## Installation
 
