@@ -81,9 +81,9 @@ export async function githubCloneCommand() {
 }
 
 export async function autoCommit() {
-  console.log("Triggered auto commit");
   const git = await readSetting("git", {});
   if (git.autoCommitMinutes) {
+    console.log("Triggered auto commit with config", git);
     const currentMinutes = new Date().getMinutes();
     if (currentMinutes % git.autoCommitMinutes === 0) {
       console.log("Auto commit time!");
