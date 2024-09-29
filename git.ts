@@ -1,5 +1,4 @@
-import { editor, shell } from "$sb/syscalls.ts";
-import { readSetting } from "$sb/lib/settings_page.ts";
+import { editor, shell, system } from "@silverbulletmd/silverbullet/syscalls";
 
 export async function commit(message?: string) {
   if (!message) {
@@ -81,7 +80,7 @@ export async function githubCloneCommand() {
 }
 
 export async function autoCommit() {
-  const git = await readSetting("git", {});
+  const git = await system.getSpaceConfig("git", {});
   if (git.autoCommitMinutes) {
     console.log("Triggered auto commit with config", git);
     const currentMinutes = new Date().getMinutes();

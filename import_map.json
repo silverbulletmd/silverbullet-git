@@ -1,5 +1,0 @@
-{
-  "imports": {
-    "$sb/": "../silverbullet/plug-api/"
-  }
-}

@@ -1,7 +1,9 @@
 {
-  "importMap": "import_map.json",
   "tasks": {
-    "build": "silverbullet plug:compile --importmap import_map.json git.plug.yaml",
-    "watch": "silverbullet plug:compile -w --importmap import_map.json git.plug.yaml"
+    "build": "silverbullet plug:compile -c deno.jsonc git.plug.yaml",
+    "watch": "silverbullet plug:compile -w -c deno.jsonc git.plug.yaml"
+  },
+  "imports": {
+    "@silverbulletmd/silverbullet": "jsr:@silverbulletmd/silverbullet@^0.9.4"
   }
 }
