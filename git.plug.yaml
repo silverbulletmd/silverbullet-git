@@ -10,6 +10,11 @@ functions:
     path: "./git.ts:githubCloneCommand"
     command:
       name: "Github: Clone"
+
+  gitlabCloneCommand:
+    path: "./git.ts:gitlabCloneCommand"
+    command:
+      name: "Gitlab: Clone"
   snapshotCommand:
     path: "./git.ts:snapshotCommand"
     command:
