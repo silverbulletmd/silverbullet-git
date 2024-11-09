@@ -65,10 +65,6 @@ export async function githubCloneCommand() {
   if (!url) {
     return;
   }
-  const userName = await editor.prompt(`Github Username:`);
-  if (!userName) {
-    return;
-  }
   const token = await editor.prompt(`Github token:`);
   if (!token) {
     return;
@@ -82,7 +78,7 @@ export async function githubCloneCommand() {
     return;
   }
   const pieces = url.split("/");
-  pieces[2] = `${userName}@${pieces[2]}`;
+  pieces[2] = `${token}@${pieces[2]}`;
 
   await initRepo(pieces, name, email);
 }
@@ -92,12 +88,14 @@ export async function gitlabCloneCommand() {
   if (!url) {
     return;
   }
-
+  const userName = await editor.prompt(`Gitlab Username:`);
+  if (!userName) {
+    return;
+  }
   const token = await editor.prompt('Gitlab token:');
   if (!token) {
     return;
   }
-
   const name = await editor.prompt(`Your name:`);
   if (!name) {
     return;
@@ -108,7 +106,7 @@ export async function gitlabCloneCommand() {
   }
 
   const pieces = url.split('/');
-  pieces[2] = `${pieces[1]}:${token}@${pieces[2]}`;
+  pieces[2] = `${userName}:${token}@${pieces[2]}`;
   
   await initRepo(pieces, name, email);
 }
