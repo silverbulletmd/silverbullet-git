@@ -44,9 +44,29 @@ async function sync() {
   console.log("Done!");
 }
 
+async function initRepo(pieces: string[], name: string, email: string) {
+  const url = pieces.join('/') + '.git';
+  await editor.flashNotification('Now going to clone the project, this may take some time.');
+  
+  await shell.run("mkdir", ["-p", "_checkout"]);
+  await shell.run("git", ["clone", url, "_checkout"]);
+  // Moving all files from _checkout to the current directory, which will complain a bit about . and .., but we'll ignore that
+  await shell.run("bash", ["-c", "mv -f _checkout/{.,}* . 2> /dev/null; true"]);
+  await shell.run("rm", ["-rf", "_checkout"]);
+  await shell.run("git", ["config", "user.name", name]);
+  await shell.run("git", ["config", "user.email", email]);
+  await editor.flashNotification(
+    "Done. Now just wait for sync to kick in to get all the content.",
+  );
+}
+
 export async function githubCloneCommand() {
-  let url = await editor.prompt(`Github project URL:`);
+  const url = await editor.prompt(`Github project URL:`);
   if (!url) {
+    return;
+  }
+  const userName = await editor.prompt(`Github Username:`);
+  if (!userName) {
     return;
   }
   const token = await editor.prompt(`Github token:`);
@@ -62,31 +82,14 @@ export async function githubCloneCommand() {
     return;
   }
   const pieces = url.split("/");
-  pieces[2] = `${token}@${pieces[2]}`;
-  url = pieces.join("/") + ".git";
-  await editor.flashNotification(
-    "Now going to clone the project, this may take some time.",
-  );
-  await shell.run("mkdir", ["-p", "_checkout"]);
-  await shell.run("git", ["clone", url, "_checkout"]);
-  // Moving all files from _checkout to the current directory, which will complain a bit about . and .., but we'll ignore that
-  await shell.run("bash", ["-c", "mv -f _checkout/{.,}* . 2> /dev/null; true"]);
-  await shell.run("rm", ["-rf", "_checkout"]);
-  await shell.run("git", ["config", "user.name", name]);
-  await shell.run("git", ["config", "user.email", email]);
-  await editor.flashNotification(
-    "Done. Now just wait for sync to kick in to get all the content.",
-  );
+  pieces[2] = `${userName}@${pieces[2]}`;
+
+  await initRepo(pieces, name, email);
 }
 
 export async function gitlabCloneCommand() {
-  let url = await editor.prompt('Gitlab project URL:');
+  const url = await editor.prompt('Gitlab project URL:');
   if (!url) {
-    return;
-  }
-
-  const userName = await editor.prompt('Gitlab username:');
-  if (!userName) {
     return;
   }
 
@@ -105,22 +108,9 @@ export async function gitlabCloneCommand() {
   }
 
   const pieces = url.split('/');
-  pieces[2] = `${userName}:${token}@${pieces[2]}`;
-  url = pieces.join('/') + '.git';
-  await editor.flashNotification('Now going to clone the project, this may take some time.');
-
-
-  await shell.run("mkdir", ["-p", "_checkout"]);
-  await shell.run("git", ["clone", url, "_checkout"]);
-  // Moving all files from _checkout to the current directory, which will complain a bit about . and .., but we'll ignore that
-  await shell.run("bash", ["-c", "mv -f _checkout/{.,}* . 2> /dev/null; true"]);
-  await shell.run("rm", ["-rf", "_checkout"]);
-  await shell.run("git", ["config", "user.name", name]);
-  await shell.run("git", ["config", "user.email", email]);
-  await editor.flashNotification(
-    "Done. Now just wait for sync to kick in to get all the content.",
-  );
+  pieces[2] = `${pieces[1]}:${token}@${pieces[2]}`;
   
+  await initRepo(pieces, name, email);
 }
 
 export async function autoCommit() {
