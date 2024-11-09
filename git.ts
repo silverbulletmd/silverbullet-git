@@ -65,6 +65,10 @@ export async function githubCloneCommand() {
   if (!url) {
     return;
   }
+  const userName = await editor.prompt(`Github Username:`);
+  if (!userName) {
+    return;
+  }
   const token = await editor.prompt(`Github token:`);
   if (!token) {
     return;
@@ -78,7 +82,7 @@ export async function githubCloneCommand() {
     return;
   }
   const pieces = url.split("/");
-  pieces[2] = `${token}@${pieces[2]}`;
+  pieces[2] = `${userName}@${pieces[2]}`;
 
   await initRepo(pieces, name, email);
 }
