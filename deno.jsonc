@@ -4,6 +4,6 @@
     "watch": "silverbullet plug:compile -w -c deno.jsonc git.plug.yaml"
   },
   "imports": {
-    "@silverbulletmd/silverbullet": "jsr:@silverbulletmd/silverbullet@^0.9.4"
+    "@silverbulletmd/silverbullet": "jsr:@silverbulletmd/silverbullet@^0.10.1"
   }
 }
