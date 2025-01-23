@@ -1,5 +1,8 @@
 import { editor, shell, system } from "@silverbulletmd/silverbullet/syscalls";
 
+const _gitlabRegex = /https:\/\/([^:]+):([^@]+)@gitlab\.com\/([^\/]+)\/([^\/\.]+)\.git/;
+const _githubRegex = /https:\/\/([^@]+)@github\.com\/([^\/]+)\/([^\/\.]+)\.git/;
+
 export async function commit(message?: string) {
   if (!message) {
     message = "Snapshot";
@@ -47,7 +50,7 @@ async function sync() {
 async function initRepo(pieces: string[], name: string, email: string) {
   const url = pieces.join('/') + '.git';
   await editor.flashNotification('Now going to clone the project, this may take some time.');
-  
+
   await shell.run("mkdir", ["-p", "_checkout"]);
   await shell.run("git", ["clone", url, "_checkout"]);
   // Moving all files from _checkout to the current directory, which will complain a bit about . and .., but we'll ignore that
@@ -107,7 +110,7 @@ export async function gitlabCloneCommand() {
 
   const pieces = url.split('/');
   pieces[2] = `${userName}:${token}@${pieces[2]}`;
-  
+
   await initRepo(pieces, name, email);
 }
 
@@ -125,4 +128,64 @@ export async function autoCommit() {
       }
     }
   }
+}
+
+function _extractGithubUrlInfo(url: string): [string] | null {
+  const match = url.match(_githubRegex);
+  if (!match) return null;
+
+  const [_, token, organization, repository] = match;
+  return [
+    token,
+    organization,
+    repository
+  ];
+}
+
+function _extractGitLabUrlInfo(url: string): [string] | null {
+  const match = url.match(_gitlabRegex);
+  if (!match) return null;
+
+  const [_, username, token, organization, repository] = match;
+  return [
+    username,
+    token,
+    organization,
+    repository
+  ];
+}
+
+function _replaceGitToken(url: string, newToken: string): string {
+  let newUrl = "";
+
+  if (_gitlabRegex.test(url)) {
+    const info = _extractGitLabUrlInfo(url)
+    newUrl = `https://${info[0]}:${newToken}@gitlab.com/${info[2]}/${info[3]}.git`;
+  }
+  if (_githubRegex.test(url)) {
+    const info = _extractGithubUrlInfo(url);
+    newUrl = `https://${newToken}@github.com/${info[1]}/${info[2]}.git`;
+  }
+  return newUrl
+}
+
+export async function gitReplaceTokenCommand() {
+
+  const newToken = await editor.prompt("Enter new token:");
+  if (!newToken) {
+    return;
+  }
+
+  const url = (await shell.run("git", ["remote", "get-url", "origin"])).stdout.trim();
+
+  const newUrl = _replaceGitToken(url, newToken)
+
+  if (newUrl.trim() == "") {
+    await editor.flashNotification("Token replaced failed!");
+    return;
+  }
+
+  await shell.run("git", ["remote", "set-url", "origin", newUrl]);
+
+  await editor.flashNotification("Token replaced successfully!");
 }

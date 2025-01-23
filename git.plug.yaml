@@ -10,7 +10,6 @@ functions:
     path: "./git.ts:githubCloneCommand"
     command:
       name: "Github: Clone"
-
   gitlabCloneCommand:
     path: "./git.ts:gitlabCloneCommand"
     command:
@@ -23,3 +22,7 @@ functions:
     path: "./git.ts:syncCommand"
     command:
       name: "Git: Sync"
+  gitReplaceTokenCommand:
+    path: "./git.ts:gitReplaceTokenCommand"
+    command:
+      name: "Git: Replace Token"
