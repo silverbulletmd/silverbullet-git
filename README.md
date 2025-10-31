@@ -1,5 +1,4 @@
 ---
-library: Git (plug)
 description: Git plug for SilverBullet
 version: "1.0"
 assets:
