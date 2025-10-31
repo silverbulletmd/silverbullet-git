@@ -1,7 +1,7 @@
 ---
 library: Git (plug)
 description: Git plug for SilverBullet
-version: 1.0
+version: "1.0"
 assets:
 - file: git.plug.js
   target: /_plug/git.plug.js
