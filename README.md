@@ -4,6 +4,7 @@ version: "1.0"
 assets:
 - file: git.plug.js
   target: /_plug/git.plug.js
+tags: meta/library
 ---
 # SilverBullet plug for Git
 
